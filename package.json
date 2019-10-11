@@ -1,0 +1,23 @@
+{
+  "name": "Express_Js",
+  "version": "1.0.0",
+  "description": "Express studies",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mohammadkharma/Express_Js.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mohammadkharma/Express_Js/issues"
+  },
+  "homepage": "https://github.com/mohammadkharma/Express_Js#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
