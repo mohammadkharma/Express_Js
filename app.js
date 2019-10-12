@@ -1,22 +1,27 @@
 const express = require('express');
 
-// the 'path' module is helpful for sending files to the client
-const path = require('path');
-
 // express is a nodejs framework that return a function that gives us much of methods to use in the app
 const app = express();
 
-// 'use()' method is used when we want to change a folder name to the client
-// 1st param: the name we want to change to
-// 2nd param: a middleware method from express to mention the file we want to hide it's name
-app.use('/public', express.static(path.join(__dirname, 'static')));
+// the 'path' module is helpful for sending files to the client
+const path = require('path');
+
+// 'use()' method is used when middleware func is needed
+
+// 'body-parser' is responsible for linking the form data to the request body
+const bodyParser = require('body-parser')
+app.use(bodyParser.urlencoded({ extended: false })); // parsing data from the form
+app.use('/public', express.static(path.join(__dirname, 'static'))); // changing the 'static' folder name to 'public' 
 
 // 'get()' method is for creating http server and it takes 2 params
 // 1st param: the route, 2nd param: the http callback fun with 'req' & 'res' as it's params
 // 'sendFile()' method is used for sending any kind of static files (html, video, json...)
-app.get('/', (req, res)=>{
+app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'static', 'index.html'));
 });
+
+// 'post()' method is for posting the client's form data to the server using the body parser and it takes 2 params
+// 1st param: the route, 2nd param: the http callback fun with 'req' & 'res' as it's params
 
 // routes
 // app.get('/example', (req, res)=>{
@@ -38,5 +43,13 @@ app.get('/', (req, res)=>{
 // the ampersand sign (&) is used to add another query string param
 // example: localhost:3000/example/:name/:age?studies=params&sort=byAge
 // route params are for optional-have data
+
+app.post('/', (req, res) => {
+    // req.body return an object with email and password from the client form
+    console.log(req.body);
+    // database work here
+    res.send('successfully posted data');
+});
+
 
 app.listen(3000);
