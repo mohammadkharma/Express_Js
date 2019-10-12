@@ -11,6 +11,7 @@ const path = require('path');
 // 'body-parser' is responsible for linking the form data to the request body
 const bodyParser = require('body-parser')
 app.use(bodyParser.urlencoded({ extended: false })); // parsing data from the form
+app.use(bodyParser.json()); // parsing data from the form
 app.use('/public', express.static(path.join(__dirname, 'static'))); // changing the 'static' folder name to 'public' 
 
 // 'get()' method is for creating http server and it takes 2 params
@@ -48,7 +49,8 @@ app.post('/', (req, res) => {
     // req.body return an object with email and password from the client form
     console.log(req.body);
     // database work here
-    res.send('successfully posted data');
+    // res.send('successfully posted data');
+    res.json({success : true});
 });
 
 
