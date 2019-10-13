@@ -26,11 +26,16 @@
     </form>
 
     <div class="col-lg-4">
-        <h1>You searched for: Stuff</h1>
+        <!-- "<%= %>" is used to insert javascript code that we want to output -->
+        <!-- "<% %>" is used to insert javascript code that we don't want to output -->
+        <h1>You searched for: <%= data.userQuery %> </h1>
+        <% if(data.loggedIn){ %>
+        <h2>You are logged in as : <%= data.userName %> </h2>
+        <% } %>
         <ul>
-            <li>dummy data</li>
-            <li>dummy data</li>
-            <li>dummy data</li>
+            <% data.searchResults.forEach(result=>{ %>
+        <li><%= `${result} ${data.userQuery}` %></li>
+        <% }) %>
         </ul>
     </div>
 

@@ -12,11 +12,23 @@ app.use('/public', express.static(path.join(__dirname, 'static'))); // changing 
 app.use(bodyParser.urlencoded({ extended: false })); // parsing data from the form
 app.use(bodyParser.json()); // parsing data from the form as 'json'
 
+app.set('view engine', 'ejs');
+
 // 'get()' method is for creating http server and it takes 2 params
 // 1st param: the route, 2nd param: the http callback fun with 'req' & 'res' as it's params
 // 'sendFile()' method is used for sending any kind of static files (html, video, json...) to the client
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'static', 'index.html'));
+app.get('/:userQuery', (req, res) => {
+    // res.sendFile(path.join(__dirname, 'static', 'index.html'));
+    
+    // rendering 'ejs' dynamic file using 'render' method that takes two params
+    // 1st param: the file of the name which should be located in a folder that we create and name it 'views' that has a copy of our 'index.html' file but with 'ejs' extension
+    // 2nd param: an object the data we want to use in the 'ejs' file
+    res.render('index', { data: {
+        userQuery : req.params.userQuery,
+        searchResults : ['kids', 'drama', 'real story'],
+        loggedIn : true,
+        username : 'king kong'
+    }});
 });
 
 // 'post()' method is for posting the client's form data to the server using the body parser and it takes 2 params
