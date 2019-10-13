@@ -10,7 +10,7 @@ const Joi = require('joi'); // 'joi' is for the user's input validation using 's
 // 'use()' method is used for creating middleware func and takes 2 params: the route and a callback func
 // when creating our own middleware func, 3 params are provided (req, res, next)
 // 'next()' method tells the request that it finished proceeding the middleware and the request can continue it's way to the server or to the next middleware func
-app.use('/', (req, res, next)=>{
+app.use('/main', (req, res, next) => {
     console.log(req.url, req.method);
     req.banana = 'banana'; // we can modify the req and res objects by adding properties to them
     next();
@@ -28,16 +28,18 @@ app.set('view engine', 'ejs');
 // 'sendFile()' method is used for sending any kind of static files (html, video, json...) to the client
 app.get('/:userQuery', (req, res) => {
     // res.sendFile(path.join(__dirname, 'static', 'index.html'));
-    
+
     // rendering 'ejs' dynamic file using 'render' method that takes two params
     // 1st param: the file of the name which should be located in a folder that we create and name it 'views' that has a copy of our 'index.html' file but with 'ejs' extension
     // 2nd param: an object the data we want to use in the 'ejs' file
-    res.render('index', { data: {
-        userQuery : req.params.userQuery,
-        searchResults : ['kids', 'drama', 'real story'],
-        loggedIn : true,
-        username : 'king kong'
-    }});
+    res.render('index', {
+        data: {
+            userQuery: req.params.userQuery,
+            searchResults: ['kids', 'drama', 'real story'],
+            loggedIn: true,
+            username: 'king kong'
+        }
+    });
 });
 
 // 'post()' method is for posting the client's form data to the server using the body parser and it takes 2 params
@@ -127,5 +129,10 @@ app.post('/', (req, res) => {
 //     else
 //         console.log(result);
 // });
+
+// requiring the 'people' router
+const people = require('./routes/people');
+// using the router by passing the base url that is related to the router and the router itself as params
+app.use('/people', people);
 
 app.listen(3000);
