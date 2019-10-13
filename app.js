@@ -6,7 +6,16 @@ const path = require('path'); // the 'path' module is helpful for sending files 
 const bodyParser = require('body-parser'); // 'body-parser' is responsible for linking the form's data to the request body
 const Joi = require('joi'); // 'joi' is for the user's input validation using 'schema'
 
-// 'use()' method is used when middleware func is needed
+// 'middleware' is the area between the request and the server where we can apply our code to the request before it reach the server
+// 'use()' method is used for creating middleware func and takes 2 params: the route and a callback func
+// when creating our own middleware func, 3 params are provided (req, res, next)
+// 'next()' method tells the request that it finished proceeding the middleware and the request can continue it's way to the server or to the next middleware func
+app.use('/', (req, res, next)=>{
+    console.log(req.url, req.method);
+    req.banana = 'banana'; // we can modify the req and res objects by adding properties to them
+    next();
+});
+
 app.use('/public', express.static(path.join(__dirname, 'static'))); // changing the 'static' folder name to 'public' 
 
 app.use(bodyParser.urlencoded({ extended: false })); // parsing data from the form
