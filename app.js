@@ -4,7 +4,7 @@ const express = require('express');
 const app = express();
 const path = require('path'); // the 'path' module is helpful for sending files to the client
 const bodyParser = require('body-parser'); // 'body-parser' is responsible for linking the form's data to the request body
-const Joi = require('joi'); // 'joi' is for the user's data validation using 'schema'
+const Joi = require('joi'); // 'joi' is for the user's input validation using 'schema'
 
 // 'use()' method is used when middleware func is needed
 app.use('/public', express.static(path.join(__dirname, 'static'))); // changing the 'static' folder name to 'public' 
@@ -47,11 +47,11 @@ app.post('/', (req, res) => {
     // req.body return an object with email and password from the client form
     console.log(req.body);
     // database work here
-    
+
     // res.send('successfully posted data');
-    
+
     // res.json({success : true});
-    
+
     // 'schema' is a blue print for the validation of the form's data
     const schema = Joi.object().keys({
         email: Joi.string().trim().email().required(),
@@ -71,5 +71,40 @@ app.post('/', (req, res) => {
     });
 });
 
+// schema for an objects and arrays:
+// const arrayString = ['banana', 'apple', 'orange'];
+// const arrayObject = [{example: 'example1'}, {example: 'example2'}, {example: 'example3'}];
+// const userInput = {
+//     personalInfo: {
+//         age: '22',
+//         city: 'berlin',
+//         state: 'f1'
+//     },
+//     preferences: arrayString
+//     // preferences: arrayObject
+// };
+
+// const personalInfoSchema = Joi.object().keys({
+//     age: Joi.string().trim().required(),
+//     city: Joi.string().trim().required(),
+//     state: Joi.string().trim().length(2).required()
+// });
+
+// const preferencesSchema = Joi.array().items(Joi.string()); // applying schema on array of string
+// const preferencesSchema = Joi.array().items(Joi.object().key({ // applying schema on array of objects
+//     example : Joi.string().required()
+// }));
+
+// const schema = Joi.object().keys({
+//     personalInfo: personalInfoSchema,
+//     preferences: preferencesSchema
+// });
+
+// Joi.validate(userInput, schema, (err, result) => {
+//     if (err)
+//         console.log(err);
+//     else
+//         console.log(result);
+// });
 
 app.listen(3000);
